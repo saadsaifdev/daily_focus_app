@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 const kBackgroundColor = Color(0xFF111319);
-const kSurfaceLowestColor = Color(0xFF0C0E14); 
+const kSurfaceLowestColor = Color(0xFF0C0E14);
 const kCardBackgroundColor = Color(0xFF191B22);
-const kCardActiveColor = Color(0xFF1E1F26);
+const kCardActiveColor = Color(0xFF212431);
 const kSurfaceHighestColor = Color(0xFF33343B);
 
 const kPrimaryColor = Color(0xFFC0C1FF);

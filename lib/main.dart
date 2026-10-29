@@ -1,3 +1,4 @@
+import 'package:daily_focus_app/constants.dart';
 import 'package:daily_focus_app/views/tasks_view.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,10 @@ class DailyFocusApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark),
-      home: TasksView(),
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: kBackgroundColor,
+      ),
+      home: const TasksView(),
     );
   }
 }

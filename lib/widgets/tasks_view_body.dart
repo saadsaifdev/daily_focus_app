@@ -1,5 +1,6 @@
 import 'package:daily_focus_app/constants.dart';
 import 'package:daily_focus_app/widgets/custom_app_bar.dart';
+import 'package:daily_focus_app/widgets/progress_card.dart';
 import 'package:flutter/material.dart';
 
 class TasksViewBody extends StatelessWidget {
@@ -13,6 +14,8 @@ class TasksViewBody extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(title: "Daily Focus", searchIcon: (Icons.search)),
+            SizedBox(height: 24),
+            ProgressCard(),
           ],
         ),
       ),
