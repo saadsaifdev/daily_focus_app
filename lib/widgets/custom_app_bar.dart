@@ -3,7 +3,11 @@ import 'package:daily_focus_app/widgets/custom_search_icon.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.title, required this.searchIcon});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    required this.searchIcon,
+  });
   final String title;
   final IconData searchIcon;
   @override
@@ -19,8 +23,8 @@ class CustomAppBar extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-         Spacer(),
-        CustomSearchIcon(searchIcon : searchIcon,),
+        Spacer(),
+        CustomSearchIcon(icon: searchIcon),
       ],
     );
   }

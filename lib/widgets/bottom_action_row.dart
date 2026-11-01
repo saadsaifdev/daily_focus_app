@@ -1,4 +1,5 @@
 import 'package:daily_focus_app/constants.dart';
+import 'package:daily_focus_app/widgets/add_task_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class BottomActionRow extends StatelessWidget {
@@ -19,22 +20,37 @@ class BottomActionRow extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Container(
-          height: 56,
-          width: 56,
-          decoration: BoxDecoration(
-            color: kPrimaryContainer,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: kPrimaryContainer.withValues(alpha: 0.45),
-                blurRadius: 20,
-                spreadRadius: 4,
+        GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: kCardBackgroundColor,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
-            ],
-          ),
-          child: const Center(
-            child: Icon(Icons.add, color: kCardBackgroundColor, size: 28),
+              builder: (context) {
+                return const AddTaskBottomSheet();
+              },
+            );
+          },
+          child: Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+              color: kPrimaryContainer,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: kPrimaryContainer.withValues(alpha: 0.45),
+                  blurRadius: 20,
+                  spreadRadius: 4,
+                ),
+              ],
+            ),
+            child: const Center(
+              child: Icon(Icons.add, color: kCardBackgroundColor, size: 28),
+            ),
           ),
         ),
       ],
