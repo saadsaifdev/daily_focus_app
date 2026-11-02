@@ -1,6 +1,7 @@
 import 'package:daily_focus_app/constants.dart';
 import 'package:daily_focus_app/widgets/category_cards.dart';
 import 'package:daily_focus_app/widgets/custom_text_field.dart';
+import 'package:daily_focus_app/widgets/primary_button.dart';
 import 'package:daily_focus_app/widgets/priority_card.dart';
 import 'package:flutter/material.dart';
 
@@ -198,15 +199,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   const SizedBox(width: 8),
                   CategoryCard(
                     onTap: () {
-                  
                       setState(() {
-                        selectedCategory = 'PERSONAL'; 
+                        selectedCategory = 'PERSONAL';
                       });
                     },
                     label: "Personal",
                     icon: Icons.person_outline,
-                    isSelected:
-                        selectedCategory == 'PERSONAL', 
+                    isSelected: selectedCategory == 'PERSONAL',
                   ),
                   const SizedBox(width: 8),
                   CategoryCard(
@@ -234,7 +233,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   CategoryCard(
                     onTap: () {
                       setState(() {
-                        selectedCategory = 'READING'; 
+                        selectedCategory = 'READING';
                       });
                     },
                     label: "Reading",
@@ -244,6 +243,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ],
               ),
             ),
+            SizedBox(height: 30),
+            PrimaryButton(title: "Task Scheduled", icon: Icons.arrow_forward, onTap: () => Navigator.pop(context))
           ],
         ),
       ),
