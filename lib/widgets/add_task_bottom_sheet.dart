@@ -1,4 +1,5 @@
 import 'package:daily_focus_app/constants.dart';
+import 'package:daily_focus_app/widgets/category_cards.dart';
 import 'package:daily_focus_app/widgets/custom_text_field.dart';
 import 'package:daily_focus_app/widgets/priority_card.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final TextEditingController subtitleController = TextEditingController();
 
   String selectedPriority = 'MEDIUM';
+  String selectedCategory = 'WORK';
 
   @override
   void dispose() {
@@ -158,6 +160,89 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   },
                 ),
               ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Text(
+                  "CATEGORY",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  "Single choice",
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CategoryCard(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 'WORK';
+                      });
+                    },
+                    label: "Work",
+                    icon: Icons.computer,
+                    isSelected: selectedCategory == 'WORK',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () {
+                  
+                      setState(() {
+                        selectedCategory = 'PERSONAL'; 
+                      });
+                    },
+                    label: "Personal",
+                    icon: Icons.person_outline,
+                    isSelected:
+                        selectedCategory == 'PERSONAL', 
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 'DESIGN';
+                      });
+                    },
+                    label: "Design",
+                    icon: Icons.palette_outlined,
+                    isSelected: selectedCategory == 'DESIGN',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 'HEALTH';
+                      });
+                    },
+                    label: "Health",
+                    icon: Icons.favorite_border,
+                    isSelected: selectedCategory == 'HEALTH',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () {
+                      setState(() {
+                        selectedCategory = 'READING'; 
+                      });
+                    },
+                    label: "Reading",
+                    icon: Icons.menu_book_outlined,
+                    isSelected: selectedCategory == 'READING',
+                  ),
+                ],
+              ),
             ),
           ],
         ),
