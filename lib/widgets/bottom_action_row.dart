@@ -1,9 +1,10 @@
 import 'package:daily_focus_app/constants.dart';
-import 'package:daily_focus_app/widgets/add_task_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class BottomActionRow extends StatelessWidget {
-  const BottomActionRow({super.key});
+  final VoidCallback onAddTap;
+
+  const BottomActionRow({super.key, required this.onAddTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +22,7 @@ class BottomActionRow extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: kCardBackgroundColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              builder: (context) {
-                return const AddTaskBottomSheet();
-              },
-            );
-          },
+          onTap: onAddTap,
           child: Container(
             height: 56,
             width: 56,

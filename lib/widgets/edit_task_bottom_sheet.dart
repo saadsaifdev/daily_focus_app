@@ -1,0 +1,273 @@
+import 'package:daily_focus_app/constants.dart';
+import 'package:daily_focus_app/model/task_model.dart';
+import 'package:daily_focus_app/widgets/category_cards.dart';
+import 'package:daily_focus_app/widgets/custom_text_field.dart';
+import 'package:daily_focus_app/widgets/primary_button.dart';
+import 'package:daily_focus_app/widgets/priority_card.dart';
+import 'package:flutter/material.dart';
+
+class EditTaskBottomSheet extends StatefulWidget {
+  final TaskModel taskToEdit;
+
+  const EditTaskBottomSheet({super.key, required this.taskToEdit});
+
+  @override
+  State<EditTaskBottomSheet> createState() => _EditTaskBottomSheetState();
+}
+
+class _EditTaskBottomSheetState extends State<EditTaskBottomSheet> {
+  late TextEditingController titleController;
+  late TextEditingController subtitleController;
+  late String selectedPriority;
+  late String selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController = TextEditingController(text: widget.taskToEdit.title);
+    subtitleController = TextEditingController(
+      text: widget.taskToEdit.subtitle,
+    );
+    selectedPriority = widget.taskToEdit.priority;
+    selectedCategory = widget.taskToEdit.category;
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    subtitleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 12,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: kPrimaryContainer,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  "Edit Focus Task",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.08),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.close,
+                      color: kOnSurfaceVariant,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
+
+            CustomTextField(
+              controller: titleController,
+              hintText: "Task Title",
+            ),
+            const SizedBox(height: 16),
+
+            CustomTextField(
+              controller: subtitleController,
+              hintText: "Task Subtitle / Details",
+              maxLines: 3,
+            ),
+            const SizedBox(height: 25),
+
+            Row(
+              children: [
+                const Text(
+                  "PRIORITY",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  "Required",
+                  style: TextStyle(
+                    color: kPrimaryContainer,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                PriorityCard(
+                  label: "HIGH",
+                  dotColor: const Color(0xFFFFB4AB),
+                  selectedColor: const Color(0xFF93000A),
+                  isSelected: selectedPriority == 'HIGH',
+                  onTap: () {
+                    setState(() {
+                      selectedPriority = 'HIGH';
+                    });
+                  },
+                ),
+                const SizedBox(width: 8),
+                PriorityCard(
+                  label: "MEDIUM",
+                  dotColor: const Color(0xFF4EDEA3),
+                  selectedColor: const Color(0xFF00A572),
+                  isSelected: selectedPriority == 'MEDIUM',
+                  onTap: () {
+                    setState(() {
+                      selectedPriority = 'MEDIUM';
+                    });
+                  },
+                ),
+                const SizedBox(width: 8),
+                PriorityCard(
+                  label: "LOW",
+                  dotColor: Colors.grey,
+                  selectedColor: Colors.white.withValues(alpha: 0.15),
+                  isSelected: selectedPriority == 'LOW',
+                  onTap: () {
+                    setState(() {
+                      selectedPriority = 'LOW';
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            Row(
+              children: [
+                Text(
+                  "CATEGORY",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  "Single choice",
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CategoryCard(
+                    onTap: () => setState(() => selectedCategory = 'WORK'),
+                    label: "Work",
+                    icon: Icons.computer,
+                    isSelected: selectedCategory == 'WORK',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () => setState(() => selectedCategory = 'PERSONAL'),
+                    label: "Personal",
+                    icon: Icons.person_outline,
+                    isSelected: selectedCategory == 'PERSONAL',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () => setState(() => selectedCategory = 'DESIGN'),
+                    label: "Design",
+                    icon: Icons.palette_outlined,
+                    isSelected: selectedCategory == 'DESIGN',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () => setState(() => selectedCategory = 'HEALTH'),
+                    label: "Health",
+                    icon: Icons.favorite_border,
+                    isSelected: selectedCategory == 'HEALTH',
+                  ),
+                  const SizedBox(width: 8),
+                  CategoryCard(
+                    onTap: () => setState(() => selectedCategory = 'READING'),
+                    label: "Reading",
+                    icon: Icons.menu_book_outlined,
+                    isSelected: selectedCategory == 'READING',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+
+            PrimaryButton(
+              title: "Update Task",
+              icon: Icons.check,
+              onTap: () {
+                if (titleController.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter a task title')),
+                  );
+                  return;
+                }
+
+                TaskModel updatedTask = TaskModel(
+                  id: widget.taskToEdit.id,
+                  title: titleController.text.trim(),
+                  subtitle: subtitleController.text.trim(),
+                  priority: selectedPriority,
+                  category: selectedCategory,
+                  time: widget.taskToEdit.time,
+                  isCompleted: widget.taskToEdit.isCompleted,
+                );
+
+                Navigator.pop(context, updatedTask);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

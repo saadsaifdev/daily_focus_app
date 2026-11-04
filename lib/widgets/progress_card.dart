@@ -1,11 +1,24 @@
 import 'package:daily_focus_app/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 
 class ProgressCard extends StatelessWidget {
-  const ProgressCard({super.key});
+  final int totalTasks;
+  final int completedTasks;
+
+  const ProgressCard({
+    super.key,
+    required this.totalTasks,
+    required this.completedTasks,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final double progressPercentage = totalTasks == 0
+        ? 0.0
+        : (completedTasks / totalTasks);
+
+    final int percentageText = (progressPercentage * 100).toInt();
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -46,18 +59,20 @@ class ProgressCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: const Column(
+            subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  '2 of 6 tasks completed',
-                  style: TextStyle(color: Colors.white70, fontSize: 13),
+                  '$completedTasks of $totalTasks tasks completed',
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  "Keep pacing yourself, you're ahead of schedule.",
-                  style: TextStyle(color: Colors.grey, fontSize: 11),
+                  progressPercentage == 1.0
+                      ? "Incredible work! You crushed all tasks today. 🔥"
+                      : "Keep pacing yourself, you're ahead of schedule.",
+                  style: const TextStyle(color: Colors.grey, fontSize: 11),
                 ),
               ],
             ),
@@ -78,17 +93,17 @@ class ProgressCard extends StatelessWidget {
                         colors: [kPrimaryContainer, kSecondaryColor],
                       ).createShader(bounds);
                     },
-                    child: const CircularProgressIndicator(
-                      value: 0.33,
+                    child: CircularProgressIndicator(
+                      value: progressPercentage,
                       strokeWidth: 5,
                       color: Colors.white,
                       backgroundColor: Colors.transparent,
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Text(
-                      '33%',
-                      style: TextStyle(
+                      '$percentageText%',
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -115,8 +130,8 @@ class ProgressCard extends StatelessWidget {
                       colors: [kPrimaryContainer, kSecondaryColor],
                     ).createShader(bounds);
                   },
-                  child: const LinearProgressIndicator(
-                    value: 0.66,
+                  child: LinearProgressIndicator(
+                    value: progressPercentage, 
                     minHeight: 5,
                     color: Colors.white,
                     backgroundColor: Colors.transparent,
@@ -130,4 +145,3 @@ class ProgressCard extends StatelessWidget {
     );
   }
 }
-

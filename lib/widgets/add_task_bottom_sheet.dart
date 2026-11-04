@@ -1,4 +1,5 @@
 import 'package:daily_focus_app/constants.dart';
+import 'package:daily_focus_app/model/task_model.dart';
 import 'package:daily_focus_app/widgets/category_cards.dart';
 import 'package:daily_focus_app/widgets/custom_text_field.dart';
 import 'package:daily_focus_app/widgets/primary_button.dart';
@@ -244,7 +245,29 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               ),
             ),
             SizedBox(height: 30),
-            PrimaryButton(title: "Task Scheduled", icon: Icons.arrow_forward, onTap: () => Navigator.pop(context))
+            PrimaryButton(
+              title: "Task Scheduled",
+              icon: Icons.arrow_forward,
+              onTap: () {
+                if (titleController.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter a task title')),
+                  );
+                  return;
+                }
+
+                TaskModel newTask = TaskModel(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  title: titleController.text.trim(),
+                  subtitle: subtitleController.text.trim(),
+                  priority: selectedPriority,
+                  category: selectedCategory,
+                  time: TimeOfDay.now().format(context),
+                );
+
+                Navigator.pop(context, newTask);
+              },
+            ),
           ],
         ),
       ),
